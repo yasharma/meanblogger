@@ -1,0 +1,17 @@
+{
+  "name": "meanblogger",
+  "version": "1.0.0",
+  "description": "A blog app using mean stack",
+  "main": "server.js",
+  "scripts": {
+    "test": "node server.js"
+  },
+  "dependencies": {
+    "express": "~4.0.0",
+    "mongoose": "~3.6.13",
+    "body-parser": "~1.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "~1.9.2"
+  }
+}
