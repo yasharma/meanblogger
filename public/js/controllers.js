@@ -28,6 +28,13 @@
 				}
 			});
 		};
+
+		$scope.deletePost = function(index){
+			var e = $scope.posts[index];
+			$http.delete('/api/posts/'+e._id).then(function(response){
+				load();
+			});
+		};
 		
 		function NewPostCreated($scope, $uibModalInstance, post) {
 			$scope.cancel = function () {

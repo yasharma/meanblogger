@@ -5,7 +5,7 @@
 	</caption>
 	<thead>
 		<tr class="bg-info">
-			<th>ID</th>
+			<th>#</th>
 			<th>Title</th>
 			<th>Body</th>
 			<th>Date</th>
@@ -18,13 +18,18 @@
 			<td>{{post.title}}</td>
 			<td>{{post.body}}</td>
 			<td>{{post.created | date : 'dd MMM yyyy'}}</td>
-			<td>Action</td>
+			<td>
+				<div class="btn-group btn-group-sm" role="group" aria-label="...">
+					<button type="button" title="Delete Post" class="btn btn-default" ng-click="deletePost($index)">
+						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+					</button>
+				</div>
+			</td>
 		</tr>
 	</tbody>
 </table>
 
 <!-- Modal -->
-
 <script type="text/ng-template" id="createPost.html">
 	<form name="postForm" ng-submit="save()">
 		<div class="modal-header">

@@ -31,6 +31,18 @@ router.route('/posts')
 		});
 	});
 
+router.route('/posts/:id')
+	.delete(function(req, res){
+		Post.remove({
+			_id: req.params.id
+		}, function(err, post){
+			if(err)
+				res.send(err);
+
+			res.json({ message: 'Successfully deleted' });
+		});
+	});
+
 router.get('/', function(req, res) {
 	//res.sendFile(path.join(__dirname + '/index.html'));
 });
