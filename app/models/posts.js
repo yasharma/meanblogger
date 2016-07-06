@@ -6,7 +6,7 @@ var PostSchema = new Schema({
 	body: String,
 	image: String,
 	status: { type: Boolean, default: true},
-	created: { type: Date, default: new Date() }
+	created: { type: Date, default: Date.now }
 });
 mongoose.connect('mongodb://localhost:27017/meanblogger'); 
 module.exports = mongoose.model('posts', PostSchema);

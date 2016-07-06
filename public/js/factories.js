@@ -26,7 +26,7 @@ angular.module('app.factories', [])
 			}
 		};
 	}])
-	.factory('RestSvr', ['$http', 'mapUrlExt',function ($http, mapUrlExt) {
+	.factory('RestSvr', ['$http', function ($http) {
 		return{
 			login: function(option){
 				return $http.post(mapUrlExt.json(option.apiUrl), option.data).then(function(response){
