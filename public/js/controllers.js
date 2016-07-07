@@ -9,7 +9,7 @@
 	.controller('PostController', ['$scope', '$http', '$uibModal', 'socketio', function($scope, $http, $uibModal, socketio){	
 		$scope.paging = {page: 1};
 		var load = function () {
-			$http.get('/api/posts/paginate', {params: {page: $scope.paging.page}}).then(function(response){
+			$http.get('/posts/paginate', {params: {page: $scope.paging.page}}).then(function(response){
 				$scope.posts = response.data.records;
 				$scope.paging = response.data.paging;
 			});	
@@ -35,14 +35,16 @@
 
 		$scope.deletePost = function(index){
 			var e = $scope.posts[index];
-			$http.delete('/api/posts/'+ e._id).then(function(response){
+			$http.delete('/posts/'+ e._id).then(function(response){
 				socketio.emit('syncposts');
 			});
 		};
 
 		$scope.updatePost = function(index){
 			var e = $scope.posts[index];
-			$http.get('/api/posts/'+ e._id).then(function(response){
+			console.log(index);
+			console.log($scope.posts);
+			$http.get('/posts/'+ e._id).then(function(response){
 				
 				var modalInstance = $uibModal.open({
 					animation: true,
@@ -66,7 +68,7 @@
 			};	
 
 			$scope.save = function(){
-				$http.post('/api/posts', $scope.post).then(function(response){
+				$http.post('/posts', $scope.post).then(function(response){
 					socketio.emit('syncposts');
 					$uibModalInstance.close();
 				});
@@ -81,7 +83,7 @@
 			};
 			$scope.post = post;
 			$scope.save = function(){
-				$http.put('/api/posts/'+post._id, $scope.post).then(function(response){
+				$http.put('/posts/'+post._id, $scope.post).then(function(response){
 					socketio.emit('syncposts');
 					$uibModalInstance.close();
 				});

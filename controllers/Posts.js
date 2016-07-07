@@ -1,15 +1,9 @@
-var express = require('express');
-var router = express.Router();
-var Post = require('./app/models/posts.js');
-var path = require('path');
-/* App middleware */
-router.use(function(req, res, next){
-	console.log('%s %s %s', req.method, req.url, req.path);
-	next();
-});
+var express = require('express')
+	, router = express.Router()
+	, Post = require(__dirname +'/../app/models/Post.js');
 
 /* App routes */
-router.route('/posts')
+router.route('/')
 	.post(function(req, res){
 		var post = new Post();
 		post.title = req.body.title;
@@ -32,7 +26,7 @@ router.route('/posts')
 		});
 	});
 
-router.route('/posts/paginate')
+router.route('/paginate')
 	.get(function(req, res){
 		var limit = 10;
 		var offset = (req.query.page) ? ((req.query.page - 1) * limit) : 0;
@@ -47,7 +41,7 @@ router.route('/posts/paginate')
 		}); 
 	});
 
-router.route('/posts/:id')
+router.route('/:id')
 	.get(function(req, res){
 		Post.findById(req.params.id, function(err, post){
 			if(err)
@@ -83,9 +77,5 @@ router.route('/posts/:id')
 			res.json({ message: 'Successfully deleted' });
 		});
 	});
-
-router.get('/', function(req, res) {
-	//res.sendFile(path.join(__dirname + '/index.html'));
-});
 
 module.exports = router;
