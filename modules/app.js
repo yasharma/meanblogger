@@ -1,11 +1,11 @@
 (function() {
-'use strict';
+	'use strict';
 
-angular.module('app', ['ngRoute', 'ngAnimate', 'app.controllers', 'app.factories','ui.bootstrap'])
+	angular.module('app', ['ngRoute', 'ngAnimate', 'app.controllers', 'app.factories','ui.bootstrap'])
 	.config(['$routeProvider', function($routeProvider){
 		$routeProvider
 		.when('/', {
-			templateUrl: 'views/posts.html', 
+			templateUrl: 'modules/posts/views/posts.html', 
 			controller: 'PostController'
 		})
 		.otherwise({

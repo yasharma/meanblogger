@@ -2,18 +2,14 @@
 	'use strict';
 
 	angular.module('app.controllers', [])
-	.controller('AppController', ['$scope', '$location', '$rootScope', function($scope, $location, $rootScope){
-		//var protocol = $location.protocol();
-		//$rootScope.appURL = $location.host();
-	}])
-	.controller('PostController', ['$scope', '$http', '$uibModal', 'socketio', function($scope, $http, $uibModal, socketio){	
+	.controller('PostController', ['$scope', '$http', '$uibModal', 'socketio', function($scope, $http, $uibModal, socketio){
 		$scope.paging = {page: 1};
 		var load = function () {
 			$http.get('/posts/paginate', {params: {page: $scope.paging.page}}).then(function(response){
 				$scope.posts = response.data.records;
 				$scope.paging = response.data.paging;
 			});	
-		}	
+		};
 
 		$scope.pageChanged = function () {
 		   	load();
@@ -42,8 +38,6 @@
 
 		$scope.updatePost = function(index){
 			var e = $scope.posts[index];
-			console.log(index);
-			console.log($scope.posts);
 			$http.get('/posts/'+ e._id).then(function(response){
 				
 				var modalInstance = $uibModal.open({

@@ -1,7 +1,7 @@
 (function() {
-'use strict';
+	'use strict';
 
-angular.module('app.factories', [])
+	angular.module('app.factories', [])
 	.factory('socketio', ['$rootScope', '$location',function ($rootScope, $location) {
 		
 		var socket = io.connect();
@@ -90,5 +90,5 @@ angular.module('app.factories', [])
 				});	
 			}
 		};
-	}])	
+	}]);
 }());
