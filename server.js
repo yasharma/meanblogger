@@ -1,12 +1,13 @@
 (function(){
 	"use strict";
 
+	require('dotenv').config({silent: true});
+	
 	var express 	= require('express'),
 		app 		= express(),
 		http 		= require('http').Server(app),
 		io 			= require('socket.io')(http),
 		bodyParser 	= require('body-parser'),
-		port 		= process.env.PORT || 3000,
 		mongoose 	= require('mongoose'),
 		morgan 		= require('morgan'),
 		database	= require('./config/database');
@@ -30,7 +31,10 @@
 	/* Register all your routes */
 	app.use('/', require('./config/routes'));
 
-	http.listen(port, function(){
-		console.log('Magic happens on port ' + port);	
+	var server_port = process.env.OPENSHIFT_NODEJS_PORT || process.env.PORT;
+	var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || process.env.HOST_IP;
+
+	http.listen(server_port, server_ip_address, function(){
+	    console.log("Listening on " + server_ip_address + ", server_port " + server_port)
 	});
 }());

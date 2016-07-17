@@ -39,3 +39,7 @@ jspm_packages
 
 # bower components
 public/bower_components/
+bower_components/
+
+# local environment variable file
+.env
