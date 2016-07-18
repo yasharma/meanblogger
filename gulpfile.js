@@ -61,7 +61,7 @@
 			ext: 'js html',
 			ignore: ['node_modules/'],
 			watch: [
-				'app/*/Post.js',
+				'app/*/*.js',
 				'config/*.js', 
 				'controllers/*.js', 
 				'modules/factories/*.js',

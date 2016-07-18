@@ -5,7 +5,7 @@
 	.config(['$routeProvider', function($routeProvider){
 		$routeProvider
 		.when('/', {
-			templateUrl: 'modules/posts/views/posts.html', 
+			templateUrl: 'posts/views/posts.html', 
 			controller: 'PostController'
 		})
 		.otherwise({

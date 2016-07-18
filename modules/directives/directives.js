@@ -5,7 +5,7 @@
     .directive('header', function () {
         return {
             restrict: 'A',
-            templateUrl: "modules/partials/header.html"
+            templateUrl: "partials/header.html"
         };
     });
 }());
