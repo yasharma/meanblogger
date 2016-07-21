@@ -27,8 +27,7 @@ describe('/GET posts', function(){
 			.get('/posts')
 			.end(function(err, res){
 				res.should.have.status(200);
-                res.body.should.be.a('object');
-                res.body.should.have.property('data');
+                res.body.should.be.a('array');
                 done();
 			});
 	});

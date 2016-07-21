@@ -8,7 +8,8 @@
   },
   "main": "server.js",
   "scripts": {
-    "test": "node server.js"
+    "start": "node server.js",
+    "test": "mocha --timeout=10000"
   },
   "dependencies": {
     "bcrypt": "^0.8.7",
@@ -30,6 +31,9 @@
     "jshint-stylish": "~2.2.0",
     "nodemon": "~1.9.2",
     "pump": "^1.0.1",
-    "socket.io": "^1.4.8"
+    "socket.io": "^1.4.8",
+    "mocha": "~2.5.3",
+    "chai": "~3.5.0",
+    "chai-http": "~3.0.0"
   }
 }

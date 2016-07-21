@@ -10,9 +10,7 @@
 			if(err){
 				res.send(err);
 			} else {
-				res.json({
-					message: 'Post created!'
-				});
+				res.json({message: 'Post created!', post: post});
 			}
 		});
 	};
@@ -68,7 +66,7 @@
 					if(err){
 						res.send(err);
 					} else {
-						res.json({message: 'Updated Successfully!!'});	
+						res.json({message: 'Updated Successfully!!', post: post});	
 					}
 				});
 			}
