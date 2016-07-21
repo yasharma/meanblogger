@@ -11,7 +11,7 @@ chai.use(chaiHttp);
 
 /* Before each test we empty the database */
 describe('Posts', function () {
-	it('it should empty the posts', function(done){
+	it('it should empty the posts collection', function(done){
 		beforeEach(function(done){
 			Post.remove({}, function(err){
 				done();
@@ -29,24 +29,6 @@ describe('/GET posts', function(){
 			.end(function(err, res){
 				res.should.have.status(200);
                 res.body.should.be.a('array');
-                done();
-			});
-	});
-});
-
-/* Test /GET posts by paginate with paging object */
-describe('/GET posts/paginate?page=1', function(){
-	it('it should GET all the posts by paginate', function(done){
-		chai.request(server)
-			.get('/posts/paginate?page=1')
-			.end(function(err, res){
-				res.should.have.status(200);
-                res.body.should.be.a('object');
-                res.body.should.have.property('records');
-                res.body.should.have.property('paging');
-                res.body.paging.should.have.property('count');
-                res.body.paging.should.have.property('limit');
-                res.body.paging.should.have.property('page');
                 done();
 			});
 	});
@@ -86,6 +68,24 @@ describe('/POST posts', function(){
                 res.body.post.should.have.property('body');
                 res.body.post.should.have.property('created');
                 res.body.post.should.have.property('status');
+                done();
+			});
+	});
+});
+
+/* Test /GET posts by paginate with paging object */
+describe('/GET posts/paginate?page=1', function(){
+	it('it should GET all the posts by paginate', function(done){
+		chai.request(server)
+			.get('/posts/paginate?page=1')
+			.end(function(err, res){
+				res.should.have.status(200);
+                res.body.should.be.a('object');
+                res.body.should.have.property('records');
+                res.body.should.have.property('paging');
+                res.body.paging.should.have.property('count');
+                res.body.paging.should.have.property('limit');
+                res.body.paging.should.have.property('page');
                 done();
 			});
 	});

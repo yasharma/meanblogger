@@ -12,6 +12,7 @@
 	}
 
 	module.exports = {
+		secret: 'HSGRFejkluEugv&*^8743bkjsdckjDkjbk',
 		url: connection_string
 	};
 

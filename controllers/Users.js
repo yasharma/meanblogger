@@ -1,7 +1,9 @@
 (function(){
 	"use strict";
 
-	var User = require(__dirname +'/../app/models/User');
+	var User 	= require(__dirname +'/../app/models/User'),
+		jwt 	= require('jsonwebtoken'),
+		config 	= require(__dirname +'/../config/database');
 
 	module.exports.register = function(req, res){
 		var user = new User({ username: req.body.username, password: req.body.password });
@@ -9,7 +11,7 @@
 			if(err){
 				res.send(err);
 			} else {
-				res.json({ type: 'success', msg: 'Users has been registered successfully', user: user });
+				res.json({message: 'User registered successfully', user: user});
 			}
 		});
 	};
@@ -20,13 +22,14 @@
 				res.send(err);
 			} else {
 				if(!user){
-					res.send({type: 'error', msg: 'Authentication failed. User not found.'});
+					res.send({type: 'error', message: 'Authentication failed. User not found.'});
 				} else {
 					user.comparePassword(req.body.password, function(err, isMatch){
 						if(isMatch && !err){
-							// create a token
+							var token = jwt.sign(user, config.secret);
+							res.json({ user: user, token: token });
 						} else {
-							res.send({type: 'error', msg: 'Authentication failed. Wrong password.'});
+							res.json({type: 'error', message: 'Authentication failed. Wrong password.'});
 						}
 					});
 				}
