@@ -21,15 +21,26 @@ describe('Posts', function () {
 		});
 		done();
 	});	
+	
 	before(function(done){
+		var user = {
+			username:'botuser', 
+			password: '123456' 
+		};
 		chai.request(server)
-		.post('/users/login')
-		.send({ username:'Testing Bot', password: '123456' })
+		.post('/users/signup')
+		.send(user)
 		.end(function(err, res){
-			token = res.body.token;
-			done();
+			chai.request(server)
+			.post('/users/login')
+			.send(user)
+			.end(function(err, res){
+				token = res.body.token;
+				done();
+			});
 		});
 	});
+
 });
 
 /* Test /GET all the posts */
