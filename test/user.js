@@ -22,7 +22,7 @@ describe('/POST register', function(){
 		var user = {
 			username: null,
 			password: null
-		}
+		};
 		chai.request(server)
 			.post('/users/signup')
 			.send(user)
@@ -41,7 +41,7 @@ describe('/POST register', function(){
 		var user = {
 			username: 'Testing Bot',
 			password: '123456'
-		}
+		};
 		chai.request(server)
 			.post('/users/signup')
 			.send(user)
@@ -58,7 +58,7 @@ describe('/POST register', function(){
 		var user = {
 			username: 'Testing Bot',
 			password: '123456'
-		}
+		};
 		chai.request(server)
 			.post('/users/signup')
 			.send(user)
@@ -78,7 +78,7 @@ describe('/POST login', function(){
 		var user = {
 			username: 'gibbrash',
 			password: 'gibbrash'
-		}
+		};
 		chai.request(server)
 			.post('/users/login')
 			.send(user)
@@ -95,7 +95,7 @@ describe('/POST login', function(){
 		var user = {
 			username: 'Testing Bot',
 			password: '123456'
-		}
+		};
 		chai.request(server)
 			.post('/users/login')
 			.send(user)

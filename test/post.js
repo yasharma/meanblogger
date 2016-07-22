@@ -2,15 +2,17 @@ process.env.NODE_ENV = 'test';
 
 var mongoose 	= require("mongoose"),
 	Post 		= require('../app/models/Post'),
+	User 		= require('../app/models/User'),
 	chai 		= require('chai'),
 	chaiHttp 	= require('chai-http'),
 	server 		= require('../server'),
 	should 		= chai.should();
 
 chai.use(chaiHttp);
-
+var token = null;
 /* Before each test we empty the database */
 describe('Posts', function () {
+	
 	it('it should empty the posts collection', function(done){
 		beforeEach(function(done){
 			Post.remove({}, function(err){
@@ -19,6 +21,15 @@ describe('Posts', function () {
 		});
 		done();
 	});	
+	before(function(done){
+		chai.request(server)
+		.post('/users/login')
+		.send({ username:'Testing Bot', password: '123456' })
+		.end(function(err, res){
+			token = res.body.token;
+			done();
+		});
+	});
 });
 
 /* Test /GET all the posts */
@@ -26,6 +37,7 @@ describe('/GET posts', function(){
 	it('it should GET all the posts', function(done){
 		chai.request(server)
 			.get('/posts')
+			.set('Authorization', 'Bearer '+ token)
 			.end(function(err, res){
 				res.should.have.status(200);
                 res.body.should.be.a('array');
@@ -39,9 +51,10 @@ describe('/POST posts', function(){
 	it('it should not POST a post without title field', function(done){
 		var post = {
 			body: 'This is the body of my test post'
-		}
+		};
 		chai.request(server)
 			.post('/posts')
+			.set('Authorization', 'Bearer '+ token)
 			.send(post)
 			.end(function(err, res){
 				res.should.have.status(200);
@@ -56,9 +69,10 @@ describe('/POST posts', function(){
 		var post = {
 			title: 'This is title from my test',
 			body: 'This is the body of my test post'
-		}
+		};
 		chai.request(server)
 			.post('/posts')
+			.set('Authorization', 'Bearer '+ token)
 			.send(post)
 			.end(function(err, res){
 				res.should.have.status(200);
@@ -125,6 +139,7 @@ describe('/PUT/:id post', function(){
 		post.save(function(err, post){
 			chai.request(server)
 				.put('/posts/' + post.id)
+				.set('Authorization', 'Bearer '+ token)
 				.send({title: 'Now title has been updated', body: 'Body has been updated'})
 				.end(function(err, res){
 					res.should.have.status(200);
@@ -147,6 +162,7 @@ describe('/DELETE/:id post', function(){
 		post.save(function(err, post){
 			chai.request(server)
 				.delete('/posts/' + post.id)
+				.set('Authorization', 'Bearer '+ token)
 				.end(function(err, res){
 					res.should.have.status(200);
 					res.body.should.be.a('object');
