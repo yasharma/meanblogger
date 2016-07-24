@@ -6,7 +6,8 @@
 		uglify 		= require('gulp-uglify'),
 		pump 		= require('pump'),
 		concat 		= require('gulp-concat'),
-		nodemon 	= require('gulp-nodemon');
+		nodemon 	= require('gulp-nodemon'),
+		cleanCSS 	= require('gulp-clean-css');
 
 	gulp.task('app', function (cb) {
 	  	pump([
@@ -106,5 +107,31 @@
 		});
 	});
 
-	gulp.task('default', ['nodemon','app','front-site','admin-site','admin-app']);
+	gulp.task('site-css', function() {
+		return gulp.src([
+				'./public/*/angular-loading-bar/build/loading-bar.min.css',
+				'./public/*/bootstrap/dist/css/bootstrap.min.css',
+				'./public/css/blog.css',
+			])
+			.pipe(concat('site.min.css'))
+	    	.pipe(cleanCSS({compatibility: 'ie8'}))
+	    	.pipe(gulp.dest('./public/css/'));
+	});
+
+	gulp.task('admin-site-css', function() {
+		return gulp.src([
+				'./public/*/angular-loading-bar/build/loading-bar.min.css',
+                './public/*/bootstrap/dist/css/bootstrap.min.css',
+                './public/*/font-awesome/css/font-awesome.min.css',
+                './public/*/Ionicons/css/ionicons.min.css',
+                './public/*/AdminLTE/dist/css/AdminLTE.min.css',
+                './public/*/AdminLTE/dist/css/skins/skin-purple.min.css',
+                './public/css/admin.css'
+			])
+			.pipe(concat('admin-site.min.css'))
+	    	.pipe(cleanCSS({compatibility: 'ie8'}))
+	    	.pipe(gulp.dest('./public/css/'));
+	});
+
+	gulp.task('default', ['nodemon','app','front-site','admin-site','admin-app','site-css','admin-site-css']);
 }());	

@@ -8,7 +8,7 @@
 	    };
 	    return auth;
 	})
-	.factory('socketio', ['$rootScope', '$location',function ($rootScope, $location) {
+	/*.factory('socketio', ['$rootScope', '$location',function ($rootScope, $location) {
 		
 		var socket = io.connect();
 		return {
@@ -31,7 +31,7 @@
 				});
 			}
 		};
-	}])
+	}])*/
 	.factory('RestSvr', ['$http', function ($http) {
 		return{
 			login: function(apiUrl, data){
