@@ -4,7 +4,7 @@
 	var Post = require(__dirname +'/../app/models/Post');
 
 	/* Create a new record /POST */
-	module.exports.save = function(req,res){
+	module.exports.save = function(req, res, next){
 		var post = new Post(req.body);
 		post.save(function(err){
 			if(err){
@@ -16,7 +16,7 @@
 	};
 
 	/* Find/Get all active records /GET */
-	module.exports.find = function(req, res) {
+	module.exports.find = function(req, res, next) {
 		Post.find({status: true}).sort({created: -1}).exec(function(err, posts){
 			if(err){
 				res.send(err);
@@ -27,10 +27,11 @@
 	};
 
 	/* Find/Get all active records along with paging /GET */
-	module.exports.paginate = function(req, res) {
+	module.exports.paginate = function(req, res, next) {
 		var limit = 10;
 		var offset = (req.query.page) ? ((req.query.page - 1) * limit) : 0;
 		Post.find({status: true}).count().exec(function(err, pageCount){
+			if(err) res.send(err);
 			if(pageCount){
 				Post.find({status: true}).skip(offset).limit(limit).sort({created: -1}).exec(function(err, posts){
 					res.json({records: posts, paging:{count: pageCount, limit: limit, page: req.query.page}});
@@ -42,7 +43,7 @@
 	};
 
 	/* FindById get single record /GET */
-	module.exports.findById = function(req, res){
+	module.exports.findById = function(req, res, next){
 		Post.findById(req.params.id, function(err, post){
 			if(err){
 				res.send(err);
@@ -53,7 +54,7 @@
 	};
 
 	/* Update a record /PUT */
-	module.exports.update = function(req,res) {
+	module.exports.update = function(req,res, next) {
 		Post.findById(req.params.id, function(err, post){
 			if(err){
 				res.send(err);
@@ -74,7 +75,7 @@
 	};
 
 	/* Delete a record /DELETE */
-	module.exports.delete = function(req, res) {
+	module.exports.delete = function(req, res, next) {
 		Post.remove({
 			_id: req.params.id
 		}, function(err, post){

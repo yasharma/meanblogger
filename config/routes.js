@@ -20,13 +20,21 @@
 		path:[
 			'/posts/paginate',
 			'/users/login',
-			'/users/signup'
+			'/users/signup',
+			'/favicon.ico'
 		]
 	}));
 
 	/* App middleware */
-	router.use(function(req, res, next){
-		// May be we can authenticate every request or something else
+	router.use(function(err, req, res, next){
+		if(err){
+			res.status(err.status || 500).json({
+				errors:{
+					name: err.name,
+					message: err.message	
+				}
+			});
+		}
 		next();
 	});
 

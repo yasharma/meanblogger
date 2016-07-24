@@ -7,6 +7,7 @@
 		.when('/', {
 			templateUrl: 'posts/views/posts.html', 
 			controller: 'PostController'
+			
 		})
 		.otherwise({
 			redirectTo: '/'

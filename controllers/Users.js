@@ -5,7 +5,7 @@
 		jwt 	= require('jsonwebtoken'),
 		config 	= require(__dirname +'/../config/database');
 
-	module.exports.register = function(req, res){
+	module.exports.register = function(req, res, next){
 		var user = new User({ username: req.body.username, password: req.body.password });
 		user.save(function(err, user){
 			if(err){
@@ -16,20 +16,30 @@
 		});
 	};
 
-	module.exports.authenticate = function(req, res){
+	module.exports.authenticate = function(req, res, next){
 		User.findOne({ username: req.body.username }, function(err, user){
 			if(err){
 				res.send(err);
 			} else {
 				if(!user){
-					res.send({type: 'error', message: 'Authentication failed. User not found.'});
+					res.json({
+						errors: {
+							name: 'Authentication error', 
+							message: 'Authentication failed. User not found.'
+						}
+					});
 				} else {
 					user.comparePassword(req.body.password, function(err, isMatch){
 						if(isMatch && !err){
 							var token = jwt.sign(user, config.secret);
 							res.json({ user: user, token: token });
 						} else {
-							res.json({type: 'error', message: 'Authentication failed. Wrong password.'});
+							res.json({
+								errors: {
+									name: 'Authentication error', 
+									message: 'Authentication failed. Wrong password.'
+								}	
+							});
 						}
 					});
 				}

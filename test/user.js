@@ -85,8 +85,9 @@ describe('/POST login', function(){
 			.end(function(err, res){
 				res.should.have.status(200);
                 res.body.should.be.a('object');
-                res.body.should.have.property('type');
-                res.body.should.have.property('message').eql('Authentication failed. User not found.');
+                res.body.should.have.property('errors');
+                res.body.errors.should.have.property('name');
+                res.body.errors.should.have.property('message').eql('Authentication failed. User not found.');
                 done();
 			});
 	});

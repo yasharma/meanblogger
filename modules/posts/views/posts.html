@@ -1,76 +1,24 @@
-<table class="table table-striped table-bordered">
-	<caption>
-		<div class="row">
-			<div class="col-md-8">
-				<button type="button" class="btn btn-info" ng-click="open()">New Post</button>	
-			</div>
-			<!-- <div class="col-md-4">
-				<div class="input-group">
-		            <input type="text" class="form-control" ng-model="post.search" required="">
-		            <span class="input-group-btn">
-		                <button class="btn btn-default" type="submit">
-		                    <span class="glyphicon glyphicon-search"></span>
-		                </button>
-		            </span>
-		        </div>
-		    </div>  -->   
-	    </div>   
-	</caption>
-	<thead>
-		<tr class="bg-info">
-			<th>#</th>
-			<th>Title</th>
-			<th>Body</th>
-			<th><a href ng-click="sortBy('date')">Date</a></th>
-			<th>Action</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr ng-repeat="post in posts | orderBy:fieldName:reverse">
-			<td>{{$index + 1}}</td>
-			<td>{{post.title}}</td>
-			<td>{{post.body}}</td>
-			<td>{{post.created | date : 'dd MMM yyyy hh:mm:ss a'}}</td>
-			<td>
-				<div class="btn-group btn-group-xs" role="group" aria-label="...">
-					<button type="button" title="Update Post" class="btn btn-default" ng-click="updatePost($index)">
-						<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-					</button>
-					<button type="button" title="Delete Post" class="btn btn-default" ng-click="deletePost($index)">
-						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-					</button>
+<div class="col-md-8">
+	<h1 ng-if="category" class="page-header">{{category.name | lowercase }}</h1>
+	<div class="row">
+		<div ng-repeat="post in posts" class="col-sm-6 col-md-6" ng-click="viewPost($index)">
+			<div class="thumbnail">
+				<div class="thumb-img">
+					<img class="img-responsive" src="http://localhost:8081/uploads/javascript-wide-retina-preview.png">
+				</div>	
+				<div class="caption">
+					<h4>{{post.title}}</h4>
+					
 				</div>
-			</td>
-		</tr>
-		<tr ng-if="posts.length == null">
-			<td class="text-center" colspan="5">No Post Yet</td>
-		</tr>
-	</tbody>
-</table>
-<uib-pagination ng-if="paging.count > paging.limit" items-per-page="paging.limit" total-items="paging.count" ng-model="paging.page" ng-change="pageChanged()"></uib-pagination>
-<!-- Modal -->
-<script type="text/ng-template" id="createPost.html">
-	<form name="postForm" ng-submit="save()">
-		<div class="modal-header">
-			<h4 class="modal-title">{{modelTitle}}</h4>
-		</div>
-		<div class="modal-body">
-			<div class="form-group">
-				<label for="title">Title</label>
-				<input type="text" class="form-control" name="title" ng-model="post.title" id="title" placeholder="Title" required>
-			</div>
-			<div class="form-group">
-				<label for="body">Body</label>
-				<textarea class="form-control" id="body" name="body" ng-model="post.body" placeholder="Type some cool stuff here :)"></textarea>
-			</div>
-			<div class="form-group">
-				<label for="image">Image Url</label>
-				<input type="url" class="form-control" name="image" ng-model="post.image" id="image" placeholder="Paste image url">
+				<!-- <div class="category">
+					<p class="pull-right"><span class="label label-{{e.Category.label || category.label}} category-list">{{e.Category.name || category.name | lowercase}}</span></p>
+					<p><span class="glyphicon glyphicon-time"></span> Posted {{e.Post.created}}</p>
+				</div> -->
 			</div>
 		</div>
-		<div class="modal-footer">
-			<button type="submit" class="btn btn-info pull-left">{{button}}</button>
-			<button type="button" class="btn btn-default" ng-click="cancel()">Close</button>
-		</div>
-	</form>
-</script>
+
+	</div>	
+	<nav class="center">
+		<uib-pagination ng-if="paging.count > paging.limit" items-per-page="paging.limit" total-items="paging.count" ng-model="paging.page" ng-change="pageChanged()"></uib-pagination>
+	</nav>
+</div>
