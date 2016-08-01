@@ -12,8 +12,8 @@
 		morgan 		= require('morgan'),
 		database	= require('./config/database');
 
-	mongoose.connect(database.url); 
-	mongoose.set('debug', true);
+	mongoose.connect(database.url);
+	mongoose.set('debug', process.env.LOCAL || false);
 
 	/* Express Middlewares */
 	app.use(express.static(__dirname + '/public'));
@@ -24,7 +24,7 @@
 
 	app.use(bodyParser.urlencoded({ extended: true }));
 	app.use(bodyParser.json());
-	app.use(morgan('dev'));
+	app.use(morgan( process.env.LOG ||'dev'));
 
 	io.on('connection', function (socket) {
 		socket.on('syncposts', function () {

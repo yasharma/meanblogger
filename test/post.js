@@ -6,6 +6,7 @@ var mongoose 	= require("mongoose"),
 	chai 		= require('chai'),
 	chaiHttp 	= require('chai-http'),
 	server 		= require('../server'),
+	fs 			= require('fs'),
 	should 		= chai.should()
 
 chai.use(chaiHttp);
@@ -83,7 +84,7 @@ describe('/POST posts', function(){
 			.set('Authorization', 'Bearer '+ token)
 			.field('title', 'This is title from my test')
 			.field('body', 'This is the body of my test post')
-			.attach('image', require('fs').readFileSync('/home/yash/meanblogger/test/img/test.png'), 'test.png')
+			.attach('image', fs.readFileSync(fs.realpathSync('test/img/test.png')), 'test.png')
 			.send()
 			.end(function(err, res){
 				res.should.have.status(200);
