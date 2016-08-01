@@ -1,0 +1,76 @@
+<section class="content">
+	<div class="row">
+		<div class="col-md-12">
+			<!-- Horizontal Form -->
+			<div class="box box-purple">
+				<div class="box-header with-border">
+					<h3 class="box-title">Create a New Post</h3>
+				</div>
+				<!-- /.box-header -->
+				<!-- form start -->
+				<form class="form-horizontal" name="postForm" role="form" ng-submit="save(postForm.$valid)">
+					<div class="box-body">
+						<!-- <div class="form-group">
+							<label class="col-sm-2 control-label">Category</label>
+							<div class="col-sm-10">
+								<input type="text" typeahead-on-select="categorySelected" ng-model="post.category" placeholder="Type to list categories" uib-typeahead="category as category.name for category in getCategories($viewValue)" typeahead-loading="loadingCategories" typeahead-min-length="3" typeahead-no-results="noResults" class="form-control" required>
+							</div>
+    					</div>	 -->
+    					<div ng-show="noResults" class="row">
+        					<div class="col-xs-8 col-xs-offset-2">
+								<strong><p class="text-danger">No Results Found</p></strong>
+							</div>
+						</div>		
+						<div class="form-group">
+							<label for="inputTitle" class="col-sm-2 control-label">Title</label>
+
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="inputTitle" name="title" placeholder="Title" ng-model="post.title" required/>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Image</label>
+
+							<div class="col-sm-10">
+								<span class="btn btn-flat btn-default btn-file">
+									Select Image <input type="file" nv-file-select uploader="uploader" accept="'image/*'" />
+								</span>	
+							</div>
+
+						</div>
+						<div class="form-group" ng-show="uploader.queue.length">
+							<div class="col-sm-10 col-sm-offset-2">
+          						<img ng-src="{{imageURL}}" class="img-thumbnail user-profile-picture">
+          					</div>	
+        				</div>
+						<div class="row">
+        					<div class="col-xs-8 col-xs-offset-2">
+								<p>--OR--</p>
+							</div>
+						</div>		
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Image URL</label>		
+							<div class="col-sm-10">
+								<input type="url" class="form-control" name="image_url" ng-model="post.imageurl" placeholder="Remote Image URL">			
+							</div>		
+						</div>
+						<div class="form-group">
+							<label for="inputDesc" class="col-sm-2 control-label">Body</label>
+
+							<div class="col-sm-10">
+								<text-angular ng-model="post.body" data-ng-required></text-angular>
+							</div>
+						</div>
+					</div>
+					<!-- /.box-body -->
+					<div class="box-footer">
+						<button type="button" ng-click="cancel()" class="btn btn-flat btn-default">Cancel</button>
+						<button type="submit" ng-disabled="postForm.$invalid" class="btn btn-flat bg-purple pull-right">Create</button>
+					</div>
+					<!-- /.box-footer -->
+				</form>
+			</div>
+			<!-- /.box -->
+		</div>
+	</div>
+</section>	

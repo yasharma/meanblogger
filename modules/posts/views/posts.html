@@ -4,16 +4,17 @@
 		<div ng-repeat="post in posts" class="col-sm-6 col-md-6" ng-click="viewPost($index)">
 			<div class="thumbnail">
 				<div class="thumb-img">
-					<img class="img-responsive" src="http://localhost:8081/uploads/javascript-wide-retina-preview.png">
+					<img class="img-responsive" ng-src="http://localhost:8081/uploads/{{post.image}}">
 				</div>	
 				<div class="caption">
 					<h4>{{post.title}}</h4>
 					
 				</div>
-				<!-- <div class="category">
-					<p class="pull-right"><span class="label label-{{e.Category.label || category.label}} category-list">{{e.Category.name || category.name | lowercase}}</span></p>
-					<p><span class="glyphicon glyphicon-time"></span> Posted {{e.Post.created}}</p>
-				</div> -->
+				<div class="category">
+					<!-- <p class="pull-right"><span class="label label-{{e.Category.label || category.label}} category-list">{{e.Category.name || category.name | lowercase}}</span></p> -->
+					<p class="pull-right"><span class="label label-warning category-list">Javascript</span></p>
+					<p><span class="glyphicon glyphicon-time"></span> Posted on {{post.created | date: 'MMMM dd, yyyy'}}</p>
+				</div>
 			</div>
 		</div>
 

@@ -18,6 +18,10 @@
 	/* Express Middlewares */
 	app.use(express.static(__dirname + '/public'));
 	app.use(express.static(__dirname + '/modules'));
+
+	// Initialize favicon middleware
+  	//app.use(favicon('./modules/core/client/img/brand/favicon.ico'));
+
 	app.use(bodyParser.urlencoded({ extended: true }));
 	app.use(bodyParser.json());
 	app.use(morgan('dev'));

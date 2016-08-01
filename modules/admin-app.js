@@ -1,19 +1,25 @@
 (function() {
 	'use strict';
 
-	angular.module('app', ['ngRoute','app.controllers', 'app.factories', 'app.directives','angular-loading-bar','ui.bootstrap','LocalStorageModule'])
+	angular.module('app', ['ngRoute','app.controllers', 'app.factories', 'app.directives','angular-loading-bar','ui.bootstrap','LocalStorageModule','angularFileUpload'])
 	.config(['$routeProvider','cfpLoadingBarProvider', '$httpProvider', function($routeProvider, cfpLoadingBarProvider, $httpProvider){
 		cfpLoadingBarProvider.includeSpinner = false;
 		$routeProvider
 		.when('/', {
 			templateUrl: 'admin/views/login.html', 
-			controller: 'AdminController',
-			
+			controller: 'AdminController'
 		})
 		.when('/dashboard', {
 			templateUrl: 'dashboard/views/dashboard.html', 
-			controller: 'DashboardController',
-			
+			controller: 'DashboardController'
+		})
+		.when('/posts', {
+			templateUrl: 'admin/views/admin_posts.html', 
+			controller: 'AdminPostController'
+		})
+		.when('/create', {
+			templateUrl: 'admin/views/create_posts.html', 
+			controller: 'CreateController'
 		})
 		.otherwise({
 			redirectTo: '/'
@@ -29,7 +35,7 @@
 		           	config.headers = config.headers || {};
 		           	var token = localStorageService.get('token');
 		           	if (token) {
-		               	config.headers.Authrization = 'Barear '+ token;
+		               	config.headers.Authorization = 'Bearer '+ token;
 		               	AuthenticationService.isLogged = 1;
 	                    $rootScope.isLogged = 1;
 		           	}
@@ -73,11 +79,14 @@
 	.run(['$rootScope', '$location', 'localStorageService', 'AuthenticationService',function ($rootScope, $location, localStorageService, AuthenticationService) {
 		$rootScope.$on("$routeChangeStart", function (event, nextRoute, currentRoute) {
 			if ( nextRoute !== null && !AuthenticationService.isLogged && !localStorageService.get('user')) {
+				console.log('if');
 			    AuthenticationService.isLogged = 0;
 			    $location.path("/");
 			} else {
+				console.log('else');
 				var token = localStorageService.get('token');
 				if($location.path() == '/' && token ){
+					console.log('againif');
 					$location.path("/dashboard");
 				}
 			}

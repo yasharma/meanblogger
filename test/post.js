@@ -61,6 +61,7 @@ describe('/GET posts', function(){
 describe('/POST posts', function(){
 	it('it should not POST a post without title field', function(done){
 		var post = {
+			image: require('fs').createReadStream('/home/yash/Pictures/495484_385c_3.jpg'),
 			body: 'This is the body of my test post'
 		};
 		chai.request(server)
@@ -77,14 +78,13 @@ describe('/POST posts', function(){
 			});
 	});
 	it('it should POST a post', function(done){
-		var post = {
-			title: 'This is title from my test',
-			body: 'This is the body of my test post'
-		};
 		chai.request(server)
 			.post('/posts')
 			.set('Authorization', 'Bearer '+ token)
-			.send(post)
+			.field('title', 'This is title from my test')
+			.field('body', 'This is the body of my test post')
+			.attach('image', require('fs').readFileSync('/home/yash/meanblogger/test/img/test.png'), 'test.png')
+			.send()
 			.end(function(err, res){
 				res.should.have.status(200);
                 res.body.should.be.a('object');

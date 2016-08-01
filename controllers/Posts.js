@@ -5,7 +5,15 @@
 
 	/* Create a new record /POST */
 	module.exports.save = function(req, res, next){
-		var post = new Post(req.body);
+
+		var post 			= new Post();
+		post.title 			= req.body.title;
+		post.body 			= req.body.body;
+		post.imageurl 		= req.body.imageurl;
+		if(req.file){
+			post.image 			= req.file.filename;
+			post.originalname 	= req.file.originalname;	
+		}
 		post.save(function(err){
 			if(err){
 				res.send(err);

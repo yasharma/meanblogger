@@ -71,7 +71,8 @@
 	        	'./public/*/angular-touch/angular-touch.min.js',
 	        	'./public/*/angular-bootstrap/ui-bootstrap-tpls.min.js',
 	        	'./public/*/angular-loading-bar/build/loading-bar.min.js',
-                './public/*/angular-local-storage/dist/angular-local-storage.min.js'
+                './public/*/angular-local-storage/dist/angular-local-storage.min.js',
+                './public/*/angular-file-upload/dist/angular-file-upload.min.js'
 	        ]),
 	        concat('admin-site.min.js'),
 	        uglify({mangle: false}),
@@ -129,7 +130,7 @@
                 './public/css/admin.css'
 			])
 			.pipe(concat('admin-site.min.css'))
-	    	.pipe(cleanCSS({compatibility: 'ie8'}))
+	    	.pipe(cleanCSS({compatibility: 'ie8', processImport: false}))
 	    	.pipe(gulp.dest('./public/css/'));
 	});
 

@@ -7,6 +7,8 @@
 	var PostSchema = new Schema({
 		body  : String,
 		image : String,
+		originalname: String,
+		imageurl: String,
 		title : { 
 			type: String,
 			lowercase: true, 

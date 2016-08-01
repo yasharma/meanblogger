@@ -4,9 +4,11 @@
 	var express 	= require('express'),
 		router 		= express.Router(),
 		expressJWT 	= require('express-jwt'),
+		multer  	= require('multer'),
 		config 		= require(__dirname + '/../config/database'),
 		posts 		= require(__dirname +'/../controllers/Posts'),
-		users 		= require(__dirname +'/../controllers/Users');
+		users 		= require(__dirname +'/../controllers/Users'),
+		upload 		= multer({ dest: './public/uploads/' });
 
 
 	/* We don't need token based authentication for this route */
@@ -39,9 +41,9 @@
 	});
 
 	/* Posts route */
-	router.route('/posts')
-		.get(posts.find)
-		.post(posts.save);
+	router.route('/posts').get(posts.find);
+
+	router.post('/posts', upload.single('image'), posts.save);
 
 	router.route('/posts/:id')
 		.put(posts.update)

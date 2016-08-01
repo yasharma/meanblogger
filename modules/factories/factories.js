@@ -69,11 +69,11 @@
 					};
 				});	
 			},
-			post: function(option){
-				return $http.post(option.apiUrl, option.data).then(function(response){
+			post: function(apiUrl, data){
+				return $http.post(apiUrl, data).then(function(response){
 					return {
-						type: response.data.message.type,
-						text: response.data.message.text
+						type: response.data.message,
+						text: response.data.post
 					};
 				});
 			},
