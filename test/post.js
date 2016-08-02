@@ -7,7 +7,7 @@ var mongoose 	= require("mongoose"),
 	chaiHttp 	= require('chai-http'),
 	server 		= require('../server'),
 	fs 			= require('fs'),
-	should 		= chai.should()
+	should 		= chai.should();
 
 chai.use(chaiHttp);
 var token = null;
