@@ -62,7 +62,6 @@ describe('/GET posts', function(){
 describe('/POST posts', function(){
 	it('it should not POST a post without title field', function(done){
 		var post = {
-			image: require('fs').createReadStream('/home/yash/Pictures/495484_385c_3.jpg'),
 			body: 'This is the body of my test post'
 		};
 		chai.request(server)
