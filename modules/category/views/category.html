@@ -1,0 +1,58 @@
+<section class="content-header">
+	<div class="row">
+		<div class="col-md-6 post-list-header">
+			<h1>Category Management</h1>	
+		</div>
+		<div class="col-md-6">
+			<a ng-href="#/create-category" class="btn btn-flat bg-purple pull-right">New Category</a>
+		</div>
+	</div>
+</section>	
+<section class="content">
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="box box-purple">
+				<!-- /.box-header -->
+				<div class="box-body table-responsive no-padding">
+					<table class="table table-hover">
+						<tr>
+							<th>Category Name</th>
+							<th>Label</th>
+							<th>Posts</th>
+							<th>Date</th>
+							<th>Status</th>
+							<th>Action</th>
+						</tr>
+						<tr ng-repeat="category in categories">
+							<td class="capital">{{category.name}}</td>
+							<td><span class="label label-{{category.label}}">{{category.label}}</span></td>
+							<td><span class="badge">{{category.post_count == null ? 0 : category.post_count}}</span></td>
+							<td>{{category.created | date: 'MMMM dd, yyyy'}}</td>
+							<td><span ng-class="{'label label-success': category.status == 1, 'label label-danger': category.status == 0}">{{ category.status == 1 ? 'Active':'In-Active' }}</span></td>
+							<td>
+								<div class="btn-group btn-group-sm" role="group" aria-label="...">
+									<button type="button" ng-click=editCategory($index) class="btn btn-flat btn-default" data-toggle="tooltip" data-placement="top" title="Edit">
+										<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+									</button>
+									<button type="button" ng-click=toggleStatus($index) class="btn btn-flat btn-default" data-toggle="tooltip" data-placement="top" title="Status">
+										<i ng-class="{'fa fa-check-circle': category.status == 1, 'fa fa-minus-circle': category.status == 0}" aria-hidden="true"></i>
+									</button>
+									<button type="button" ng-click=deleteCategory($index) class="btn btn-flat btn-default" data-toggle="tooltip" data-placement="top" title="Delete">
+										<i class="fa fa-trash" aria-hidden="true"></i>
+									</button>
+								</div>
+							</td>
+						</tr>
+						<tr ng-if="categories.length == 0">
+							<td class="text-center" colspan="5">No Categories Found</td>
+						</tr>
+					</table>
+				</div>
+				<!-- /.box-body -->
+				<div ng-if="paging.count > paging.limit" class="box-footer clearfix">
+					<uib-pagination items-per-page="paging.limit" total-items="paging.count" ng-model="paging.page" ng-change="pageChanged()"></uib-pagination>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

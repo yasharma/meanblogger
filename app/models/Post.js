@@ -1,17 +1,17 @@
 (function(){
 	"use strict";
 
-	var mongoose = require('mongoose');
-	var Schema = mongoose.Schema;
+	var mongoose 	= require('mongoose'),
+		Schema 		= mongoose.Schema,
+		URLSlugs 	= require('mongoose-url-slugs');
 
-	var PostSchema = new Schema({
+	var	PostSchema = new Schema({
 		body  : String,
 		image : String,
 		originalname: String,
 		imageurl: String,
 		title : { 
 			type: String,
-			lowercase: true, 
 			trim: true,
 			required: true
 		},
@@ -25,5 +25,6 @@
 		}
 	});
 
+	PostSchema.plugin(URLSlugs('title', {field: 'slug'}));
 	module.exports = mongoose.model('Post', PostSchema);
 }());

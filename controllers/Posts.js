@@ -1,7 +1,9 @@
 (function(){
 	"use strict";
 
-	var Post = require(__dirname +'/../app/models/Post');
+	var Post = require(__dirname +'/../app/models/Post'),
+		path = require('path'),
+		fs	 = require('fs');
 
 	/* Create a new record /POST */
 	module.exports.save = function(req, res, next){
@@ -36,12 +38,15 @@
 
 	/* Find/Get all active records along with paging /GET */
 	module.exports.paginate = function(req, res, next) {
-		var limit = 10;
-		var offset = (req.query.page) ? ((req.query.page - 1) * limit) : 0;
-		Post.find({status: true}).count().exec(function(err, pageCount){
+		var limit = 10,
+			offset = (req.query.page) ? ((req.query.page - 1) * limit) : 0,
+			condition = {};
+		if (req.query.status) { condition.status = req.query.status; }
+		console.log(condition);
+		Post.find(condition).count().exec(function(err, pageCount){
 			if(err) res.send(err);
 			if(pageCount){
-				Post.find({status: true}).skip(offset).limit(limit).sort({created: -1}).exec(function(err, posts){
+				Post.find(condition).skip(offset).limit(limit).sort({created: -1}).exec(function(err, posts){
 					res.json({records: posts, paging:{count: pageCount, limit: limit, page: req.query.page}});
 				});
 			} else {
@@ -51,8 +56,8 @@
 	};
 
 	/* FindById get single record /GET */
-	module.exports.findById = function(req, res, next){
-		Post.findById(req.params.id, function(err, post){
+	module.exports.findBySlug = function(req, res, next){
+		Post.findOne({slug: req.params.slug}, function(err, post){
 			if(err){
 				res.send(err);
 			} else {
@@ -63,19 +68,21 @@
 
 	/* Update a record /PUT */
 	module.exports.update = function(req,res, next) {
-		Post.findById(req.params.id, function(err, post){
+		Post.findOne({_id: req.params.id}, function(err, post){
 			if(err){
 				res.send(err);
 			} else {
+				
 				post.title = req.body.title;
 				post.body = req.body.body;
 				post.image = req.body.image;
-
+				post.status = req.body.status;
+				
 				post.save(function(err){
 					if(err){
 						res.send(err);
 					} else {
-						res.json({message: 'Updated Successfully!!', post: post});	
+						res.json({message: 'Post updated Successfully!!', post: post, result: true});	
 					}
 				});
 			}
@@ -84,13 +91,28 @@
 
 	/* Delete a record /DELETE */
 	module.exports.delete = function(req, res, next) {
-		Post.remove({
-			_id: req.params.id
-		}, function(err, post){
+		Post.findOne({_id: req.params.id}, 'image', function(err, post){
+			fs.unlink(path.resolve('public/uploads/' + post.image), function(err){
+				Post.remove({
+					_id: post._id
+				}, function(err, post){
+					if(err){
+						res.send(err);
+					} else {
+						res.json({ message: 'Successfully deleted', result: post });
+					}
+				});
+			});
+		});	
+	};
+
+	/* Returns the count of total posts in DB */
+	module.exports.count = function(req, res, next){
+		Post.count(function(err, count){
 			if(err){
 				res.send(err);
 			} else {
-				res.json({ message: 'Successfully deleted', result: post });
+				res.json({count: count});
 			}
 		});
 	};

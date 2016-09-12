@@ -2,7 +2,9 @@
 	'use strict';
 
 	angular.module('app.controllers')
-	.controller('DashboardController', ['$scope', 'RestSvr', function($scope, RestSvr){
-		console.log('DashboardController');
+	.controller('DashboardController', ['$scope', '$http', function($scope, $http){
+		/*$http.get('/count?c=posts,categories').then(function(response){
+			
+		});*/
 	}]);
 }());

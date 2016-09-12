@@ -6,7 +6,7 @@
 	<title>Admin Login</title>
 	<!-- Tell the browser to be responsive to screen width -->
 	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic"> -->
 	<link rel="stylesheet" href="css/admin-site.min.css">
 
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -17,7 +17,8 @@
         <![endif]-->
     </head>
     <body ng-class="{'hold-transition login-page': user == null, 'hold-transition skin-purple sidebar-mini':user != null}">
-    	<div class="wrapper">
+    	<div class="{'content-wrapper': user != null}" set-height>
+            <toaster-container></toaster-container>
     		<div ng-if="user != null" admin-header></div>
     		<div ng-if="user != null" admin-sidebar></div>
     		<div ng-class="{'content-wrapper': user != null}">

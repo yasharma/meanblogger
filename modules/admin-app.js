@@ -1,7 +1,7 @@
 (function() {
 	'use strict';
 
-	angular.module('app', ['ngRoute','app.controllers', 'app.factories', 'app.directives','angular-loading-bar','ui.bootstrap','LocalStorageModule','angularFileUpload'])
+	angular.module('app', ['ngRoute','app.controllers', 'textAngular','app.factories', 'toaster','app.directives','ngAnimate','angular-loading-bar','ui.bootstrap','LocalStorageModule','angularFileUpload'])
 	.config(['$routeProvider','cfpLoadingBarProvider', '$httpProvider', function($routeProvider, cfpLoadingBarProvider, $httpProvider){
 		cfpLoadingBarProvider.includeSpinner = false;
 		$routeProvider
@@ -20,6 +20,22 @@
 		.when('/create', {
 			templateUrl: 'admin/views/create_posts.html', 
 			controller: 'CreateController'
+		})
+		.when('/edit-post/:id', {
+			templateUrl: 'admin/views/create_posts.html', 
+			controller: 'EditPostController'
+		})
+		.when('/category', {
+			templateUrl: 'category/views/category.html', 
+			controller: 'CategoryController'
+		})
+		.when('/create-category', {
+			templateUrl: 'category/views/create_category.html', 
+			controller: 'NewCategoryController'
+		})
+		.when('/edit-category/:id', {
+			templateUrl: 'category/views/create_category.html', 
+			controller: 'EditCategoryController'
 		})
 		.otherwise({
 			redirectTo: '/'

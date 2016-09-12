@@ -31,7 +31,8 @@
 	        	'./modules/directives/*.js',
 	        	'./modules/admin-app.js',
 	        	'./modules/admin/controllers/*.js',
-	        	'./modules/dashboard/controllers/*.js'
+	        	'./modules/dashboard/controllers/*.js',
+	        	'./modules/category/controllers/*.js'
 	        ]),
 	        concat('admin-app.min.js'),
 	        uglify({mangle: false}),
@@ -46,6 +47,7 @@
 	        gulp.src([
 	        	'./public/*/angular/angular.min.js',
 	        	'./public/*/angular-animate/angular-animate.min.js',
+	        	'./public/*/textAngular/dist/textAngular-sanitize.min.js',
 	        	'./public/*/angular-touch/angular-touch.min.js',
 	        	'./public/*/angular-bootstrap/ui-bootstrap-tpls.min.js',
 	        	'./public/*/angular-route/angular-route.min.js',
@@ -72,7 +74,11 @@
 	        	'./public/*/angular-bootstrap/ui-bootstrap-tpls.min.js',
 	        	'./public/*/angular-loading-bar/build/loading-bar.min.js',
                 './public/*/angular-local-storage/dist/angular-local-storage.min.js',
-                './public/*/angular-file-upload/dist/angular-file-upload.min.js'
+                './public/*/angular-file-upload/dist/angular-file-upload.min.js',
+                './public/*/textAngular/dist/textAngular-rangy.min.js',
+                './public/*/textAngular/dist/textAngular-sanitize.min.js',
+                './public/*/textAngular/dist/textAngular.min.js',
+                './public/*/AngularJS-Toaster/toaster.min.js'
 	        ]),
 	        concat('admin-site.min.js'),
 	        uglify({mangle: false}),
@@ -127,6 +133,8 @@
                 './public/*/Ionicons/css/ionicons.min.css',
                 './public/*/AdminLTE/dist/css/AdminLTE.min.css',
                 './public/*/AdminLTE/dist/css/skins/skin-purple.min.css',
+                './public/*/textAngular/dist/textAngular.css',
+                './public/*/AngularJS-Toaster/toaster.min.css',
                 './public/css/admin.css'
 			])
 			.pipe(concat('admin-site.min.css'))

@@ -22,3 +22,4 @@ a:hover, a:active, a:focus{color: #514E8F; }
     cursor: inherit;
     display: block;
 }
+.capital { text-transform: capitalize;  }

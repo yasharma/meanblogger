@@ -47,7 +47,7 @@
 			paginate: function(apiUrl, params, queryString){
 				var p = !angular.isUndefined(params) ? params : '';
 				var q = !angular.isUndefined(queryString) ? queryString : '';
-				return $http.get((apiUrl + p ), q).then(function(response){
+				return $http.get(apiUrl, p).then(function(response){
 					return {
 						records: response.data.records,
 						paging: response.data.paging
@@ -62,34 +62,32 @@
 					};
 				});
 			},
-			getById: function(option){
-				return $http.get(option.apiUrl + option.id).then(function(response){
+			getById: function(apiUrl, id){
+				return $http.get(apiUrl + id).then(function(response){
 					return {
-						record: response.data.record
+						record: response.data
 					};
 				});	
 			},
 			post: function(apiUrl, data){
 				return $http.post(apiUrl, data).then(function(response){
-					return {
-						type: response.data.message,
-						text: response.data.post
-					};
+					return (response.data.code === 11000 && response.data.name === "MongoError") ?
+					{result: false, message: 'Category already exist'} :
+					{result: response.data.result, message: response.data.message, record: response.data.record };
 				});
 			},
-			put: function(option){
-				return $http.put((option.apiUrl + option.id), option.data).then(function(response){
-					return {
-						type: response.data.message.type,
-						text: response.data.message.text
-					};
+			put: function(apiUrl, id, data){
+				return $http.put((apiUrl + id), data).then(function(response){
+					return (response.data.code === 11000 && response.data.name === "MongoError") ?
+					{result: false, message: 'Category already exist'} :
+					{result: response.data.result, message: response.data.message, record: response.data.record };
 				});
 			},
-			delete: function(option){
-				return $http.delete((option.apiUrl + option.id)).then(function(response){
+			delete: function(apiUrl, id){
+				return $http.delete(apiUrl + id).then(function(response){
 					return {
-						type: response.data.message.type,
-						text: response.data.message.text
+						message: response.data.message,
+						result: response.data.result
 					};
 				});	
 			}

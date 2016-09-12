@@ -43,3 +43,7 @@ bower_components/
 
 # local environment variable file
 .env
+
+# VSC files
+jsconfig.json
+typings/
