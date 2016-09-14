@@ -9,10 +9,15 @@
 			templateUrl: 'posts/views/posts.html', 
 			controller: 'PostController'	
 		})
+		.when('/search?:q', { 
+			templateUrl: 'posts/views/posts.html', 
+			controller: 'PostSearchController'
+		})
 		.when('/:slug', {
 			templateUrl: 'posts/views/single.html', 
 			controller: 'ViewPostController'
 		})
+		
 		.otherwise({
 			redirectTo: '/'
 		});

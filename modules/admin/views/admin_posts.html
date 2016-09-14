@@ -46,7 +46,7 @@
 				</div>
 				<!-- /.box-body -->
 				<div ng-if="paging.count > paging.limit" class="box-footer clearfix">
-					<uib-pagination items-per-page="paging.limit" total-items="paging.count" ng-model="paging.page" ng-change="pageChanged()"></uib-pagination>
+					<uib-pagination items-per-page="paging.limit" total-items="paging.count" force-ellipses="forceEllipses" max-size="maxSize" ng-model="paging.page" ng-change="pageChanged()"></uib-pagination>
 				</div>
 			</div>
 		</div>

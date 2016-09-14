@@ -14,7 +14,10 @@
             //scope: {user: '='},
             templateUrl: "partials/sidebar.html",
             controller: ['$scope', '$location', function ($scope, $location) {
-                // Your behaviour goes here :)
+                $scope.search = function(isValid){
+                    if(!isValid) return;
+                    $location.path('/search').search('q', $scope.post.search);
+                };
                 
             }]
         };

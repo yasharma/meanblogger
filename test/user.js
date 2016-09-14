@@ -31,9 +31,9 @@ describe('/POST register', function(){
                 res.body.should.be.a('object');
                 res.body.should.have.property('errors');
                 res.body.errors.should.have.property('username');
-                res.body.errors.username.should.have.property('type').eql('required');
+                res.body.errors.username.should.have.property('kind').eql('required');
                 res.body.errors.should.have.property('password');
-                res.body.errors.password.should.have.property('type').eql('required');
+                res.body.errors.password.should.have.property('kind').eql('required');
                 done();
 			});
 	});
@@ -65,9 +65,7 @@ describe('/POST register', function(){
 			.end(function(err, res){
 				res.should.have.status(200);
                 res.body.should.be.a('object');
-                res.body.should.have.property('name');
                 res.body.should.have.property('code').eql(11000);
-                res.body.should.have.property('ok').eql(1);
                 done();
 			});
 	});

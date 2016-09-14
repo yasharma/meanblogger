@@ -14,6 +14,7 @@
 
 	/* We don't need token based authentication for this routes */
 	router.get('/posts/paginate', posts.paginate);
+	router.get('/posts/search', posts.search);
 
 	router.route('/posts/:slug').get(posts.findBySlug);
 
@@ -50,6 +51,7 @@
 	router.route('/posts/:id')
 		.put(posts.update)
 		.delete(posts.delete);
+
 
 	/* Users route */
 	router.post('/users/signup', users.register);	

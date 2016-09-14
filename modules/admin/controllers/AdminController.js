@@ -28,8 +28,10 @@
 		};
 	}])
 	.controller('AdminPostController', ['$scope', 'RestSvr', 'toaster',function($scope, RestSvr, toaster){
+		$scope.forceEllipses = true;
+		$scope.maxSize = 15;
+		$scope.paging = {page: 1};
 		var load = function () {
-			$scope.paging = {page: 1};
 			RestSvr.paginate('/posts/paginate', {params: {page: $scope.paging.page}}).then(function(response){
 				$scope.posts = response.records;
 				$scope.paging = response.paging;
