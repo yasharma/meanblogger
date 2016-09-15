@@ -11,7 +11,7 @@
 		mongoose 	= require('mongoose'),
 		morgan 		= require('morgan'),
 		database	= require('./config/database');
-
+	mongoose.Promise = global.Promise;
 	mongoose.connect(database.url);
 	mongoose.set('debug', process.env.LOCAL || false);
 
