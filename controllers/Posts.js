@@ -122,7 +122,9 @@
 			limit = 10,
 			offset = (req.query.page) ? ((req.query.page - 1) * limit) : 0;
 		Post.find( { status: true, $text: { $search: "local area network" } } ).count().exec(function(err, resultCount){
-			if(err) res.send(err);
+			if(err) {
+				return res.send(err);
+			}	
 			if(resultCount){
 				Post.find({ status: true, $text: { $search: search } }, { score: { $meta: "textScore" } })
 					.sort( { score: { $meta: "textScore" } } )

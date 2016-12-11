@@ -119,7 +119,7 @@ describe('/GET posts/paginate?page=1', function(){
 });
 
 /* Test /GET searched posts by paginate with paging object */
-describe('/GET posts/search', function(){
+/*describe('/GET posts/search', function(){
 	it('it should GET all the searched posts by paginate', function(done){
 		chai.request(server)
 			.get('/posts/search?page=1&q="local area network"&status=true')
@@ -134,7 +134,7 @@ describe('/GET posts/search', function(){
                 done();
 			});
 	});
-});
+});*/
 
 /* Test /:id Route */
 describe('/GET/:id post', function(){
