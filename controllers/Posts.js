@@ -42,7 +42,6 @@
 			offset = (req.query.page) ? ((req.query.page - 1) * limit) : 0,
 			condition = {};
 		if (req.query.status) { condition.status = req.query.status; }
-		console.log(condition);
 		Post.find(condition).count().exec(function(err, pageCount){
 			if(err) res.send(err);
 			if(pageCount){

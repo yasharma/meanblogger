@@ -1,57 +1,58 @@
-(function(){
-	"use strict";
+/* jshint esversion: 6 */
+/* jshint node: true */
+"use strict";
 
-	var mongoose 	= require('mongoose'),
-		Schema 		= mongoose.Schema,
-		bcrypt		= require('bcrypt'),
+const mongoose 	= require('mongoose'),
+	crypto 		= require('crypto'),
+	path 		= require('path'),
+	core 	 	= require(path.resolve('./config/core')),
+	Schema 		= mongoose.Schema,
+	
+UserSchema 	= new Schema({
+	username: {
+		type: String,
+		unique: true,
+		required: true
+	},
+	password: {
+		type: String,
+		required: true
+	},
+	status: {
+		type: Boolean,
+		default: true
+	},
+	created: {
+		type: Date,
+		default: Date.now
+	}
+});
 
-	UserSchema 	= new Schema({
-		username: {
-			type: String,
-			unique: true,
-			required: true
-		},
-		password: {
-			type: String,
-			required: true
-		},
-		status: {
-			type: Boolean,
-			default: true
-		},
-		created: {
-			type: Date,
-			default: Date.now
-		}
-	});
+/* Mongoose beforeSave Hook : To hash a password */
+UserSchema.pre('save', function(next){
+	var user = this;
+	if(this.isModified('password') || this.isNew){
+		user.password = this.hashPassword(core.salt, user.password);
+		next();
+	} else {
+		return next();
+	}
+});
 
-	/* Mongoose beforeSave Hook : To hash a password */
-	UserSchema.pre('save', function(next){
-		var user = this;
-		if(this.isModified('password') || this.isNew){
-			bcrypt.hash(user.password, 10, function(err, hash){
-				if(err){
-					return next(err);
-				} else {
-					user.password = hash;
-					next();
-				}
-			});
-		} else {
-			return next();
-		}
-	});
+/**
+ * Create instance method for hashing a password
+ */
+UserSchema.methods.hashPassword = function (salt, password) {
+  if (salt && password) {
+    return crypto.createHmac('sha512', salt).update(password).digest('base64');
+  } else {
+    return password;
+  }
+};
 
-	/* To check a password */
-	UserSchema.methods.comparePassword = function(passw, cb){
-		bcrypt.compare(passw, this.password, function(err, isMatch){
-			if(err){
-				return cb(err);
-			} else {
-				cb(null, isMatch);
-			}
-		});
-	};
+/* To check a password */
+UserSchema.methods.comparePassword = function(salt, password){
+	return this.password === this.hashPassword(salt, password);
+};
 
-	module.exports = mongoose.model('User', UserSchema);
-}());
+module.exports = mongoose.model('User', UserSchema);

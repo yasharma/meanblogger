@@ -1,33 +1,33 @@
-(function(){
-	"use strict";
+/* jshint esversion: 6 */
+/* jshint node: true */
+"use strict";
 
-	var mongoose = require('mongoose');
-	var Schema = mongoose.Schema;
+let mongoose = require('mongoose'),
+	Schema = mongoose.Schema,
 
-	var CategorySchema = new Schema({
-		label: {
-			type: String,
-			default: 'default'
+ CategorySchema = new Schema({
+	label: {
+		type: String,
+		default: 'default'
+	},
+	postcount: Number,
+	name : { 
+		type: String,
+		index: {
+			unique: true
 		},
-		postcount: Number,
-		name : { 
-			type: String,
-			index: {
-				unique: true
-			},
-			lowercase: true,
-			trim: true,
-			required: true
-		},
-		status : { 
-			type: Boolean, 
-			default: true
-		},
-		created : { 
-			type: Date, 
-			default: Date.now 
-		}
-	});
+		lowercase: true,
+		trim: true,
+		required: true
+	},
+	status : { 
+		type: Boolean, 
+		default: true
+	},
+	created : { 
+		type: Date, 
+		default: Date.now 
+	}
+});
 
-	module.exports = mongoose.model('Category', CategorySchema);
-}());
+module.exports = mongoose.model('Category', CategorySchema);

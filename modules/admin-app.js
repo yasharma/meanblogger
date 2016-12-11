@@ -77,7 +77,7 @@
 	                
 	                if (rejection !== null && rejection.status === 400) {
 
-	                	console.log(rejection);
+	                	
 	                	localStorageService.remove('token');
 	                	localStorageService.remove('user');
 	                	AuthenticationService.isLogged = false;
@@ -95,14 +95,11 @@
 	.run(['$rootScope', '$location', 'localStorageService', 'AuthenticationService',function ($rootScope, $location, localStorageService, AuthenticationService) {
 		$rootScope.$on("$routeChangeStart", function (event, nextRoute, currentRoute) {
 			if ( nextRoute !== null && !AuthenticationService.isLogged && !localStorageService.get('user')) {
-				console.log('if');
 			    AuthenticationService.isLogged = 0;
 			    $location.path("/");
 			} else {
-				console.log('else');
 				var token = localStorageService.get('token');
 				if($location.path() == '/' && token ){
-					console.log('againif');
 					$location.path("/dashboard");
 				}
 			}

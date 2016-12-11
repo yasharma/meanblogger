@@ -1,11 +1,11 @@
 process.env.NODE_ENV = 'test';
 
-var mongoose 	= require("mongoose"),
-	Post 		= require('../app/models/Post'),
-	User 		= require('../app/models/User'),
+var path 	= require("path"),
+	Post 		= require(path.resolve('./app/models/Post')),
+	User 		= require(path.resolve('./app/models/User')),
 	chai 		= require('chai'),
 	chaiHttp 	= require('chai-http'),
-	server 		= require('../server'),
+	server 		= require(path.resolve('./server')),
 	fs 			= require('fs'),
 	should 		= chai.should();
 

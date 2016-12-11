@@ -102,15 +102,19 @@
 		.pipe(jshint.reporter('jshint-stylish'));
 	});
 
-	gulp.task('nodemon', function () {
-		nodemon({
+	gulp.task('nodemon', function (cb) {
+		var called = false;
+		return nodemon({
 			tasks: ['jshint'],
 			script: 'server.js',
 			ext: 'js html',
 			ignore: ['node_modules/','public/bower_components/','public/js/', 'test/', 'coverage/'],
 		})
-		.on('restart', function(){
-			console.log('restarted');
+		.on('start', function () {
+			if (!called) {
+				called = true;
+				cb();
+			}
 		});
 	});
 
@@ -142,5 +146,5 @@
 	    	.pipe(gulp.dest('./public/css/'));
 	});
 
-	gulp.task('default', ['nodemon','app','front-site','admin-site','admin-app','site-css','admin-site-css']);
+	gulp.task('default', ['app','front-site','admin-site','admin-app','site-css','admin-site-css','nodemon']);
 }());	
